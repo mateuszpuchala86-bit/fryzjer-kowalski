@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zakład Fryzjerski Kowalski — Kielce</title>
+<meta name="description" content="Zakład fryzjerski Kowalski w Kielcach. Strzyżenie męskie i damskie, golenie brzytwą, trzy pokolenia jednej rodziny.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1A1A1A;
+    --bone:#F2EFEA;
+    --terracotta:#C75D3D;
+    --stone:#8A8378;
+    --white:#FFFFFF;
+    --line: rgba(26,26,26,0.12);
+    --radius: 14px;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:var(--bone);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  ::selection{ background:var(--terracotta); color:var(--white); }
+
+  a{ color:inherit; text-decoration:none; }
+
+  .mono{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+  }
+
+  h1,h2,h3,h4{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    line-height:1.05;
+    letter-spacing:-0.01em;
+  }
+
+  :focus-visible{
+    outline:2px solid var(--terracotta);
+    outline-offset:3px;
+  }
+
+  /* ===== TOP BAR ===== */
+  .topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:1.4rem clamp(1.2rem, 4vw, 3rem);
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(242,239,234,0.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+
+  .logo{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:1.15rem;
+    letter-spacing:-0.02em;
+  }
+  .logo span{ color:var(--terracotta); }
+
+  .topbar nav{
+    display:flex;
+    gap:2rem;
+  }
+  .topbar nav a{
+    font-size:0.85rem;
+    font-weight:500;
+    position:relative;
+    padding-bottom:0.2rem;
+  }
+  .topbar nav a::after{
+    content:'';
+    position:absolute;
+    left:0; bottom:0;
+    width:0; height:1.5px;
+    background:var(--terracotta);
+    transition:width 0.25s ease;
+  }
+  .topbar nav a:hover::after{ width:100%; }
+
+  .topbar .cta-small{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.72rem;
+    background:var(--ink);
+    color:var(--bone);
+    padding:0.55rem 1rem;
+    border-radius:100px;
+    letter-spacing:0.03em;
+  }
+  .topbar .cta-small:hover{ background:var(--terracotta); }
+
+  @media (max-width:760px){
+    .topbar nav{ display:none; }
+  }
+
+  /* ===== WRAP ===== */
+  .wrap{
+    max-width:1280px;
+    margin:0 auto;
+    padding:0 clamp(1.2rem, 4vw, 3rem);
+  }
+
+  /* ===== HERO ===== */
+  .hero{
+    padding:clamp(3rem, 8vw, 6rem) 0 clamp(2rem, 5vw, 3rem);
+    position:relative;
+  }
+
+  .hero-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:2rem;
+    margin-bottom:clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  .hero-eyebrow{
+    color:var(--terracotta);
+    margin-bottom:1rem;
+    display:flex;
+    align-items:center;
+    gap:0.6rem;
+  }
+  .hero-eyebrow::before{
+    content:'';
+    width:6px; height:6px;
+    background:var(--terracotta);
+    border-radius:50%;
+    display:inline-block;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse{
+    0%,100%{ opacity:1; }
+    50%{ opacity:0.3; }
+  }
+
+  .hero h1{
+    font-size:clamp(2.6rem, 7vw, 5.4rem);
+    max-width:14ch;
+  }
+
+  .hero-meta{
+    text-align:right;
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.78rem;
+    color:var(--stone);
+    line-height:1.6;
+    white-space:nowrap;
+    padding-top:0.4rem;
+  }
+
+  .hero-sub{
+    max-width:42ch;
+    font-size:1.05rem;
+    color:#454138;
+    margin-top:1.2rem;
+    line-height:1.55;
+  }
+
+  /* ===== BENTO GRID ===== */
+  .bento{
+    display:grid;
+    grid-template-columns:repeat(6, 1fr);
+    gap:14px;
+    padding-bottom:clamp(2rem, 6vw, 4rem);
+  }
+
+  .card{
+    background:var(--white);
+    border-radius:var(--radius);
+    border:1px solid var(--line);
+    padding:1.6rem;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    transition: transform 0.35s cubic-bezier(.2,.8,.2,1), box-shadow 0.35s ease;
+  }
+  .card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 18px 32px -18px rgba(26,26,26,0.25);
+  }
+
+  .card-num{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.7rem;
+    color:var(--stone);
+    position:absolute;
+    top:1.2rem;
+    right:1.4rem;
+  }
+
+  /* span helpers */
+  .c-2{ grid-column:span 2; }
+  .c-3{ grid-column:span 3; }
+  .c-4{ grid-column:span 4; }
+  .c-6{ grid-column:span 6; }
+  .r-2{ grid-row:span 2; }
+
+  /* PHOTO CARD (hero image) */
+  .card-photo{
+    background:
+      linear-gradient(160deg, rgba(26,26,26,0.55), rgba(26,26,26,0.15)),
+      repeating-linear-gradient(135deg, #3a3530 0 14px, #2c2823 14px 28px);
+    color:var(--bone);
+    justify-content:flex-end;
+    min-height:340px;
+    overflow:hidden;
+  }
+  .card-photo .ph-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.68rem;
+    color:rgba(242,239,234,0.65);
+    letter-spacing:0.03em;
+  }
+  .card-photo h3{
+    color:var(--white);
+    font-size:1.4rem;
+    margin-top:0.4rem;
+  }
+
+  /* DARK / INK CARD */
+  .card-ink{
+    background:var(--ink);
+    color:var(--bone);
+    border-color:var(--ink);
+  }
+  .card-ink .card-num{ color:var(--stone); }
+
+  .card-ink h3{ color:var(--bone); }
+  .card-ink p{ color:#C9C4BB; }
+
+  /* TERRACOTTA CARD */
+  .card-terra{
+    background:var(--terracotta);
+    color:var(--white);
+    border-color:var(--terracotta);
+  }
+  .card-terra .card-num{ color:rgba(255,255,255,0.7); }
+
+  .card h4.label{
+    font-family:'JetBrains Mono', monospace;
+    text-transform:uppercase;
+    font-size:0.72rem;
+    letter-spacing:0.05em;
+    color:var(--stone);
+    margin-bottom:0.6rem;
+  }
+  .card-ink h4.label, .card-terra h4.label{ color:rgba(255,255,255,0.6); }
+
+  .card p{
+    font-size:0.92rem;
+    color:#5C574C;
+    line-height:1.5;
+  }
+
+  /* price list card */
+  .price-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    padding:0.55rem 0;
+    border-bottom:1px solid var(--line);
+    font-size:0.92rem;
+  }
+  .price-row:last-child{ border-bottom:none; }
+  .price-row .pname{ font-weight:500; }
+  .price-row .pval{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.85rem;
+    color:var(--terracotta);
+    white-space:nowrap;
+  }
+
+  /* hours card */
+  .hours-row{
+    display:flex;
+    justify-content:space-between;
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.82rem;
+    padding:0.4rem 0;
+    color:#C9C4BB;
+  }
+  .hours-row.today{ color:var(--white); font-weight:500; }
+  .hours-row .d{ color:var(--stone); }
+  .hours-row.today .d{ color:var(--terracotta); }
+
+  /* quote card */
+  .quote-mark{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:3rem;
+    color:rgba(26,26,26,0.12);
+    line-height:0.6;
+    margin-bottom:0.4rem;
+  }
+  .quote-text{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:1.15rem;
+    font-weight:500;
+    line-height:1.35;
+    margin-bottom:0.8rem;
+  }
+  .quote-author{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.75rem;
+    color:var(--stone);
+  }
+
+  /* map card */
+  .card-map{
+    background:
+      linear-gradient(0deg, rgba(242,239,234,0.4), rgba(242,239,234,0.4)),
+      repeating-linear-gradient(0deg, #E4DFD5 0 1px, transparent 1px 22px),
+      repeating-linear-gradient(90deg, #E4DFD5 0 1px, transparent 1px 22px);
+    min-height:220px;
+    justify-content:flex-end;
+  }
+  .pin{
+    width:14px; height:14px;
+    background:var(--terracotta);
+    border-radius:50% 50% 50% 0;
+    transform:rotate(-45deg);
+    position:absolute;
+    top:46%;
+    left:42%;
+    box-shadow:0 0 0 6px rgba(199,93,61,0.18);
+  }
+
+  /* CTA bottom of grid */
+  .card-cta{
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    justify-content:space-between;
+    gap:1rem;
+  }
+  .card-cta h3{ font-size:1.5rem; max-width:18ch; }
+  .btn{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.78rem;
+    background:var(--ink);
+    color:var(--bone);
+    padding:0.85rem 1.5rem;
+    border-radius:100px;
+    white-space:nowrap;
+    transition:background 0.2s ease, transform 0.2s ease;
+    display:inline-block;
+  }
+  .card-terra .btn{
+    background:var(--ink);
+    color:var(--bone);
+  }
+  .btn:hover{ background:var(--terracotta); transform:translateY(-2px); }
+
+  /* responsive */
+  @media (max-width:980px){
+    .bento{ grid-template-columns:repeat(2, 1fr); }
+    .c-2,.c-3,.c-4{ grid-column:span 2; }
+    .c-6{ grid-column:span 2; }
+    .r-2{ grid-row:auto; }
+    .hero-top{ flex-direction:column; gap:0.6rem; }
+    .hero-meta{ text-align:left; }
+    .card-cta{ flex-direction:column; align-items:flex-start; }
+  }
+
+  @media (max-width:520px){
+    .bento{ grid-template-columns:1fr; }
+    .c-2,.c-3,.c-4,.c-6{ grid-column:span 1; }
+  }
+
+  /* ===== SERVICES SECTION ===== */
+  .services{
+    padding:clamp(3rem,6vw,5rem) 0;
+    border-top:1px solid var(--line);
+  }
+  .section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    margin-bottom:2.4rem;
+    gap:1rem;
+    flex-wrap:wrap;
+  }
+  .section-head h2{ font-size:clamp(1.8rem,4vw,2.6rem); }
+  .section-head .mono{ color:var(--stone); }
+
+  .services-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+  }
+  .service-item{
+    background:var(--white);
+    padding:2rem 1.6rem;
+  }
+  .service-item .si-num{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.72rem;
+    color:var(--terracotta);
+    margin-bottom:1rem;
+    display:block;
+  }
+  .service-item h3{ font-size:1.2rem; margin-bottom:0.5rem; }
+  .service-item p{ font-size:0.88rem; color:#5C574C; line-height:1.5; }
+
+  @media (max-width:760px){
+    .services-grid{ grid-template-columns:1fr; }
+  }
+
+  /* ===== FOOTER ===== */
+  footer{
+    border-top:1px solid var(--line);
+    padding:2.4rem 0 2.6rem;
+  }
+  .foot-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:1rem;
+  }
+  .foot-row .mono{ color:var(--stone); }
+
+  /* reveal animation */
+  .reveal{
+    opacity:0;
+    transform:translateY(16px);
+    transition:opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.in{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ opacity:1; transform:none; transition:none; }
+    .hero-eyebrow::before{ animation:none; }
+    .card{ transition:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">KOWALSKI<span>.</span></div>
+  <nav>
+    <a href="#uslugi">Usługi</a>
+    <a href="#cennik">Cennik</a>
+    <a href="#godziny">Godziny</a>
+    <a href="#kontakt">Kontakt</a>
+  </nav>
+  <a href="tel:+48413701234" class="cta-small">+48 41 370 12 34</a>
+</div>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="hero-top">
+      <div>
+        <div class="hero-eyebrow mono">Kielce, ul. Sienkiewicza 14</div>
+        <h1>Strzyżenie<br>to rzemiosło,<br>nie usługa.</h1>
+        <p class="hero-sub">Trzy pokolenia jednej rodziny za jednym fotelem. Zero pośpiechu, zero szablonu — każda głowa to inna robota.</p>
+      </div>
+      <div class="hero-meta">
+        ZAŁ. 1987<br>
+        FOTELE: 3<br>
+        ŚR. CZAS WIZYTY: 35 MIN<br>
+        BEZ ZAPISÓW ONLINE — TEL.
+      </div>
+    </div>
+  </section>
+
+  <section class="bento">
+
+    <div class="card card-photo c-4 r-2 reveal">
+      <span class="card-num">01</span>
+      <span class="ph-label">[ZDJĘCIE: WNĘTRZE ZAKŁADU — fotele, lustra, narzędzia na blacie]</span>
+      <h3>Zakład przy Sienkiewicza</h3>
+    </div>
+
+    <div class="card card-ink c-2 reveal">
+      <span class="card-num">02</span>
+      <h4 class="label">Od 1987</h4>
+      <h3>Trzy pokolenia<br>za fotelem</h3>
+      <p style="margin-top:0.6rem;">Zakład prowadzi dziś syn założyciela. Ten sam adres, ta sama rzetelność.</p>
+    </div>
+
+    <div class="card c-2 reveal">
+      <span class="card-num">03</span>
+      <h4 class="label">Godziny — dziś</h4>
+      <div id="hours-widget">
+        <div class="hours-row" data-day="1"><span class="d">Pon</span><span>9:00–18:00</span></div>
+        <div class="hours-row" data-day="2"><span class="d">Wt</span><span>9:00–18:00</span></div>
+        <div class="hours-row" data-day="3"><span class="d">Śr</span><span>9:00–18:00</span></div>
+        <div class="hours-row" data-day="4"><span class="d">Czw</span><span>9:00–18:00</span></div>
+        <div class="hours-row" data-day="5"><span class="d">Pt</span><span>9:00–19:00</span></div>
+        <div class="hours-row" data-day="6"><span class="d">Sob</span><span>8:00–14:00</span></div>
+        <div class="hours-row" data-day="0"><span class="d">Niedz</span><span>zamknięte</span></div>
+      </div>
+    </div>
+
+    <div class="card card-terra c-2 reveal">
+      <span class="card-num">04</span>
+      <h4 class="label">Bez zapisów</h4>
+      <h3 style="font-size:1.3rem;">Wpadasz<br>i czekasz<br>w kolejce</h3>
+      <p style="color:rgba(255,255,255,0.85); margin-top:0.6rem;">Stali klienci wiedzą — sobotni rano to szczyt.</p>
+    </div>
+
+    <div class="card c-2 reveal">
+      <span class="card-num">05</span>
+      <h4 class="label">Opinia</h4>
+      <div class="quote-mark">"</div>
+      <div class="quote-text">Strzyże mnie tu już dziesiąty rok. Nigdy nie musiałem nic wyjaśniać.</div>
+      <div class="quote-author">— Marek, klient od 2016</div>
+    </div>
+
+    <div class="card c-2 reveal">
+      <span class="card-num">06</span>
+      <h4 class="label">Cennik — wybrane</h4>
+      <div class="price-row"><span class="pname">Strzyżenie męskie</span><span class="pval">45 zł</span></div>
+      <div class="price-row"><span class="pname">Strzyżenie + broda</span><span class="pval">65 zł</span></div>
+      <div class="price-row"><span class="pname">Golenie brzytwą</span><span class="pval">40 zł</span></div>
+      <div class="price-row"><span class="pname">Strzyżenie dziecięce</span><span class="pval">35 zł</span></div>
+    </div>
+
+    <div class="card card-map c-2 reveal">
+      <span class="card-num">07</span>
+      <div class="pin"></div>
+      <h4 class="label">Dojazd</h4>
+      <h3 style="font-size:1.1rem;">ul. Sienkiewicza 14<br>25-007 Kielce</h3>
+    </div>
+
+    <div class="card card-cta card-ink c-6 reveal">
+      <span class="card-num">08</span>
+      <h3>Zapisów nie przyjmujemy<br>telefonicznie wystarczy zapytać o wolny fotel.</h3>
+      <a href="tel:+48413701234" class="btn">Zadzwoń: 41 370 12 34</a>
+    </div>
+
+  </section>
+
+  <section class="services" id="uslugi">
+    <div class="section-head">
+      <h2>Co robimy</h2>
+      <span class="mono">04 usługi</span>
+    </div>
+    <div class="services-grid">
+      <div class="service-item reveal">
+        <span class="si-num">01 / MĘSKIE</span>
+        <h3>Strzyżenie klasyczne</h3>
+        <p>Maszynka, nożyczki, modelowanie. Dopasowane do kształtu głowy, nie do trendu z Instagrama.</p>
+      </div>
+      <div class="service-item reveal">
+        <span class="si-num">02 / BRODA</span>
+        <h3>Golenie brzytwą</h3>
+        <p>Gorący ręcznik, pędzel, ostrze. Tradycyjny rytuał, na który dziś mało kto ma czas — my mamy.</p>
+      </div>
+      <div class="service-item reveal">
+        <span class="si-num">03 / DZIECI</span>
+        <h3>Strzyżenie dziecięce</h3>
+        <p>Cierpliwość przede wszystkim. Pierwsza wizyta u fryzjera nie musi być traumą.</p>
+      </div>
+      <div class="service-item reveal">
+        <span class="si-num">04 / SENIOR</span>
+        <h3>Strzyżenie + trymowanie brwi</h3>
+        <p>Pakiet dla stałych klientów w każdym wieku. Bez dopłat za detale.</p>
+      </div>
+      <div class="service-item reveal">
+        <span class="si-num">05 / STYLIZACJA</span>
+        <h3>Mycie i modelowanie</h3>
+        <p>Na wesele, rozmowę o pracę, zwykły wtorek. Wychodzisz inaczej, niż wszedłeś.</p>
+      </div>
+      <div class="service-item reveal">
+        <span class="si-num">06 / KONSULTACJA</span>
+        <h3>Dobór fryzury</h3>
+        <p>Nie wiesz, czego chcesz? Powiedz, jak żyjesz — resztę dogadamy przy fotelu.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer id="kontakt">
+  <div class="wrap foot-row">
+    <div class="mono">© 2026 ZAKŁAD FRYZJERSKI KOWALSKI — KIELCE</div>
+    <div class="mono">UL. SIENKIEWICZA 14 · TEL. 41 370 12 34</div>
+  </div>
+</footer>
+
+<script>
+  // reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold:0.12 });
+  revealEls.forEach(el=>io.observe(el));
+
+  // highlight today in hours widget
+  const today = new Date().getDay(); // 0 = Sunday
+  document.querySelectorAll('#hours-widget .hours-row').forEach(row=>{
+    if(parseInt(row.dataset.day) === today){
+      row.classList.add('today');
+    }
+  });
+</script>
+
+</body>
+</html>
